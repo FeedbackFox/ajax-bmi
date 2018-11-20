@@ -1,0 +1,60 @@
+<html>
+<head>
+<script>
+function showBMI() {
+    var height = document.getElementById("height").value;
+    var weight = document.getElementById("weight").value;
+    var metric = document.getElementById("metric").checked;
+    var sendString = height + "&weight=" + weight + "&" + metric;
+        var xmlhttp = new XMLHttpRequest(); // initialize xmlhttprequest object
+        xmlhttp.onreadystatechange = function() { // once request return the value 1 because it started, do the following
+            if (this.readyState == 4 && this.status == 200) {   // if everything is working correctly and the request is finished
+                document.getElementById("results").innerHTML = this.responseText; //change resul to suggestion
+            }
+        };
+        xmlhttp.open("GET", "getbmi.php?height=" + sendString, true);  //specifies type of request
+        xmlhttp.send(); // sends
+
+}
+</script>
+</head>
+<body>
+
+<p class="rainbow"><b>Start filling in your height and weight below:</b></p>
+
+<label id="metriclabel">Metric   <input type="radio" id="metric" name="units" checked="true"></label><br>
+<label id="imperiallabel">Imperial <input type="radio" id="imperial" name="units"></label><br>
+
+<p>Height:</p>
+<br>
+<p id="feet">Feet:</p>
+<input type="text" id="height" required><br>
+<p id="inches">Inches: </p>
+<input type="text" id="inchesinput"><br id="br1">
+Weight: <input type="text" id="weight" required><br>
+<button onclick="showBMI()">Submit</button>
+
+<p><span id="results"></span></p>
+<script>
+(function(){
+  setInterval(function CheckForChecks() {
+    if(document.getElementById("metric").checked)
+    {
+      document.getElementById("inches").style.display = "none";
+      document.getElementById("inchesinput").style.display = "none";
+      document.getElementById("feet").style.display = "none";
+      document.getElementById("br1").style.display = "none";
+    }
+    else
+    {
+      document.getElementById("inches").style.display = "inline";
+      document.getElementById("inchesinput").style.display = "inline";
+      document.getElementById("feet").style.display = "inline";
+      document.getElementById("br1").style.display = "block";
+    }
+  }, 3)
+})()
+</script>
+<script src="rainbowscript.js"></script>
+</body>
+</html>
